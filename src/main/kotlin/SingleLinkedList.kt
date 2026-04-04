@@ -47,6 +47,9 @@ class SingleLinkedList : CustomList {
         val newNode = Node(element, null)
         newNode.next = head
         head = newNode
+        if (tail == null) {
+            tail = head
+        }
         _size++
     }
 
@@ -70,6 +73,9 @@ class SingleLinkedList : CustomList {
     override fun remove(element: Int): Boolean {
         if (head?.value == element) {
             head = head?.next
+            if (head == null) {
+                tail = null
+            }
             _size--
             return true
         }
@@ -78,6 +84,9 @@ class SingleLinkedList : CustomList {
         while (currentNode != null) {
             if (currentNode.value == element) {
                 previousNode?.next = currentNode.next
+                if (currentNode.next == null) {
+                    tail = previousNode
+                }
                 _size--
                 return true
             }
