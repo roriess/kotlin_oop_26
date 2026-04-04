@@ -5,26 +5,24 @@ class SingleLinkedList : CustomList {
     private class Node(var value: Int, var next: Node? = null)
 
     private var head: Node? = null
+    private var tail: Node? = null
     private var _size = 0
 
     override val size: Int
         get() = _size
 
     override fun add(element: Int) {
-        val newNode = Node(element, null)
         if (head == null) {
             addFirst(element)
         } else {
-            var currentNode = head
-            while (currentNode?.next != null) {
-                currentNode = currentNode.next
-            }
-            currentNode?.next = newNode
+            val newNode = Node(element, null)
+            tail?.next = newNode
+            tail = newNode
             _size++
         }
     }
 
-    override operator fun set(index: Int, value: Int) {
+    private fun nodeAt(index: Int): Node {
         if (index < 0 || index >= size) {
             throw IndexOutOfBoundsException("Index $index out of bounds for size $size")
         }
@@ -32,12 +30,17 @@ class SingleLinkedList : CustomList {
         var currentIndex = 0
         while (currentNode != null) {
             if (currentIndex == index) {
-                currentNode.value = value
-                return
+                return currentNode
             }
-            currentIndex++
             currentNode = currentNode.next
+            currentIndex++
         }
+        throw IllegalStateException("Not found at index $index")
+    }
+
+    override operator fun set(index: Int, value: Int) {
+        val currentNode = nodeAt(index)
+        currentNode.value = value
     }
 
     override fun addFirst(element: Int) {
@@ -48,19 +51,7 @@ class SingleLinkedList : CustomList {
     }
 
     override operator fun get(index: Int): Int {
-        if (index < 0 || index >= size) {
-            throw IndexOutOfBoundsException("Index $index out of bounds for size $size")
-        }
-        var currentNode = head
-        var currentIndex = 0
-        while (currentNode != null) {
-            if (currentIndex == index) {
-                return currentNode.value
-            }
-            currentNode = currentNode.next
-            currentIndex++
-        }
-        return -1
+        return nodeAt(index).value
     }
 
     override fun indexOf(element: Int): Int {
