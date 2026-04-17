@@ -1,7 +1,8 @@
 package org.example.stack
+import org.example.list.CustomArrayList
 
 class ArrayListStack : Stack {
-    private val list = ArrayList<Int>()
+    private val list = CustomArrayList(0)
 
     override fun push(value: Int) {
         list.add(value)
@@ -12,7 +13,9 @@ class ArrayListStack : Stack {
         if (isEmpty) {
             throw NoSuchElementException("Stack is empty")
         }
-        return list.removeAt(list.size - 1)
+        val lastElement = get(list.size - 1)
+        list.remove(lastElement)
+        return lastElement
     }
 
     // Get top item from stack
@@ -24,7 +27,7 @@ class ArrayListStack : Stack {
     }
 
     override val isEmpty: Boolean
-        get() = list.isEmpty()
+        get() = size == 0
 
     override operator fun get(index: Int): Int {
         return list[index]
@@ -35,15 +38,17 @@ class ArrayListStack : Stack {
     }
 
     override fun add(element: Int) {
-        push(element)
+        list.add(element)
     }
 
     override fun addFirst(element: Int) {
-        list.add(0, element)
+        list.addFirst(element)
     }
+
     override fun remove(element: Int): Boolean {
         return list.remove(element)
     }
+
     override fun indexOf(element: Int): Int {
         return list.indexOf(element)
     }

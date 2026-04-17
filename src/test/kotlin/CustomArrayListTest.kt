@@ -92,6 +92,8 @@ class CustomArrayListTest {
         list.add(30)
 
         assertEquals(1, list.indexOf(20))
+        assertEquals(-1, list.indexOf(25))
+
     }
 
     @Test

@@ -20,7 +20,7 @@ class CustomArrayList(startSize: Int): CustomList {
 
     private fun resize(newSize: Int) {
         if (inner.size >= newSize) {
-            throw Exception("Current size is bigger than $newSize")
+            throw IllegalArgumentException("Current size is bigger than $newSize")
         }
         val newInner = IntArray(newSize)
         for (i in 0..lastElementIndex) {
@@ -31,7 +31,11 @@ class CustomArrayList(startSize: Int): CustomList {
 
     override fun add(element: Int) {
         if (lastElementIndex + 1 >= inner.size) {
-            resize(inner.size * 2)
+            if (inner.isEmpty()) {
+                resize(2)
+            } else {
+                resize(inner.size * 2)
+            }
         }
         lastElementIndex++
         inner[lastElementIndex] = element
@@ -78,7 +82,7 @@ class CustomArrayList(startSize: Int): CustomList {
                 return i
             }
         }
-        throw Exception("Element $element not found")
+        return -1
     }
 
     override val size: Int

@@ -123,6 +123,24 @@ open class SingleLinkedList: CustomList {
         return value
     }
 
+    fun removeFirst(): Int {
+        if (head == null) {
+            throw NoSuchElementException("List is empty")
+        }
+        if (head == tail) {
+            val value = head!!.value
+            head = null
+            tail = null
+            _size--
+            return value
+        }
+
+        val element = head!!.value
+        head = head!!.next
+        _size--
+        return element
+    }
+
     fun peekLast(): Int {
         if (head == null) {
             throw NoSuchElementException("List is empty")
@@ -132,12 +150,12 @@ open class SingleLinkedList: CustomList {
             return head!!.value
         }
 
-        var currentNode = head
-        while (currentNode?.next != tail) {
-            currentNode = currentNode?.next
-        }
-
         return tail!!.value
+    }
+
+    fun peekFirst(): Int {
+        if (head == null) throw NoSuchElementException()
+        return head!!.value
     }
 
     override fun iterator(): Iterator<Int> {
