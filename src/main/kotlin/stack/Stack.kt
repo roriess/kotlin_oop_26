@@ -1,8 +1,6 @@
 package org.example.stack
 
-import org.example.list.CustomList
-
-interface Stack : CustomList {
+interface Stack {
     // Add item to stack
     fun push(value: Int)
 

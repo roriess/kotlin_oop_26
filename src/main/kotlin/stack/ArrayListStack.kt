@@ -2,10 +2,17 @@ package org.example.stack
 import org.example.list.CustomArrayList
 
 class ArrayListStack : Stack {
-    private val list = CustomArrayList(0)
+    private val stack = CustomArrayList(0)
 
     override fun push(value: Int) {
-        list.add(value)
+        stack.add(value)
+    }
+
+    private fun removeLast(): Int {
+        val lastIndex = stack.size - 1
+        val lastElement = stack[lastIndex]
+        stack.removeAt(lastIndex)
+        return lastElement
     }
 
     // Get and remove top item from stack
@@ -13,9 +20,7 @@ class ArrayListStack : Stack {
         if (isEmpty) {
             throw NoSuchElementException("Stack is empty")
         }
-        val lastElement = get(list.size - 1)
-        list.remove(lastElement)
-        return lastElement
+        return removeLast()
     }
 
     // Get top item from stack
@@ -23,40 +28,13 @@ class ArrayListStack : Stack {
         if (isEmpty) {
             throw NoSuchElementException("Stack is empty")
         }
-        return list[list.size - 1]
+        val lastIndex = stack.size - 1
+        return stack[lastIndex]
     }
+
+    val size: Int get() = stack.size
 
     override val isEmpty: Boolean
         get() = size == 0
 
-    override operator fun get(index: Int): Int {
-        return list[index]
-    }
-
-    override operator fun set(index: Int, value: Int) {
-        list[index] = value
-    }
-
-    override fun add(element: Int) {
-        list.add(element)
-    }
-
-    override fun addFirst(element: Int) {
-        list.addFirst(element)
-    }
-
-    override fun remove(element: Int): Boolean {
-        return list.remove(element)
-    }
-
-    override fun indexOf(element: Int): Int {
-        return list.indexOf(element)
-    }
-
-    override val size: Int
-        get() = list.size
-
-    override fun iterator(): Iterator<Int> {
-        return list.iterator()
-    }
 }

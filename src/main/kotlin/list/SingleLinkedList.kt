@@ -6,9 +6,9 @@ class Node (
 )
 
 open class SingleLinkedList: CustomList {
-    private var head: Node? = null
-    private var tail: Node? = null
-    private var _size = 0
+    var head: Node? = null
+    var tail: Node? = null
+    var _size = 0
 
     override val size: Int
         get() = _size
@@ -46,8 +46,7 @@ open class SingleLinkedList: CustomList {
     }
 
     override fun addFirst(element: Int) {
-        val newNode = Node(element, null)
-        newNode.next = head
+        val newNode = Node(element, head)
         head = newNode
         if (tail == null) {
             tail = head
@@ -98,66 +97,6 @@ open class SingleLinkedList: CustomList {
         return false
     }
 
-    fun removeLast(): Int {
-        if (head == null) {
-            throw NoSuchElementException("List is empty")
-        }
-
-        if (head == tail) {
-            val value = head!!.value
-            head = null
-            tail = null
-            _size--
-            return value
-        }
-
-        var currentNode = head
-        while (currentNode?.next != tail) {
-            currentNode = currentNode?.next
-        }
-
-        val value = tail!!.value
-        tail = currentNode
-        tail?.next = null
-        _size--
-        return value
-    }
-
-    fun removeFirst(): Int {
-        if (head == null) {
-            throw NoSuchElementException("List is empty")
-        }
-        if (head == tail) {
-            val value = head!!.value
-            head = null
-            tail = null
-            _size--
-            return value
-        }
-
-        val element = head!!.value
-        head = head!!.next
-        _size--
-        return element
-    }
-
-    fun peekLast(): Int {
-        if (head == null) {
-            throw NoSuchElementException("List is empty")
-        }
-
-        if (head == tail) {
-            return head!!.value
-        }
-
-        return tail!!.value
-    }
-
-    fun peekFirst(): Int {
-        if (head == null) throw NoSuchElementException()
-        return head!!.value
-    }
-
     override fun iterator(): Iterator<Int> {
         return object : Iterator<Int> {
             var currentNode = head
@@ -182,3 +121,5 @@ open class SingleLinkedList: CustomList {
             }
     }
 }
+
+

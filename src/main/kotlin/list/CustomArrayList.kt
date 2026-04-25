@@ -53,6 +53,7 @@ class CustomArrayList(startSize: Int): CustomList {
         lastElementIndex++
     }
 
+
     override fun addFirst(element: Int) {
         shiftElementsRight(0)
         inner[0] = element
@@ -74,6 +75,12 @@ class CustomArrayList(startSize: Int): CustomList {
             }
         }
         return false
+    }
+
+
+    fun removeAt(index: Int) {
+        if (index < 0 || index >= size) throw IndexOutOfBoundsException()
+        shiftElementsLeft(index)
     }
 
     override fun indexOf(element: Int): Int {
